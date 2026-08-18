@@ -1,0 +1,22 @@
+# Node modules & build
+node_modules/
+.next/
+out/
+build/
+dist/
+
+# SQLite Database (data preserved locally)
+prisma/dev.db
+prisma/dev.db-journal
+
+# Environment variables
+.env.local
+.env.production
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# OS Files
+.DS_Store
+Thumbs.db
