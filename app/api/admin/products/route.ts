@@ -3,6 +3,9 @@ import { cookies } from "next/headers";
 import { db } from "@/lib/db";
 import { slugify } from "@/lib/utils";
 
+// Mark as dynamic to prevent build-time data collection
+export const dynamic = "force-dynamic";
+
 function checkAuth(): boolean {
   const authCookie = cookies().get("admin_auth");
   return authCookie?.value === "authenticated";

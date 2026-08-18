@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { writeFile, mkdir } from "fs/promises";
 import path from "path";
 
+// Mark as dynamic to prevent build-time processing
+export const dynamic = "force-dynamic";
+
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
