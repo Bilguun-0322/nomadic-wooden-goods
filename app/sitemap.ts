@@ -5,7 +5,7 @@ import { db } from "@/lib/db";
 export const dynamic = "force-dynamic";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = "https://nomadicwoodengoods.mn";
+  const baseUrl = "https://nomadic-wooden-goods-git-main-bilguun-0322s-projects.vercel.app/";
 
   let products: { slug: string; updatedAt: Date }[] = [];
   try {
