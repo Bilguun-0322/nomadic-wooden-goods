@@ -75,7 +75,7 @@ export function AdminDashboard() {
     priceNote: "",
     description: "",
     tags: "",
-    imageUrl: "/uploads/avdar-ulzii-satin.jpg",
+    imageUrl: "uploads/1786698625219-tsagaan-awdar.jpg",
   });
 
   const [uploadingImage, setUploadingImage] = useState(false);
@@ -155,7 +155,7 @@ export function AdminDashboard() {
       priceNote: "",
       description: "",
       tags: "",
-      imageUrl: "/uploads/avdar-ulzii-satin.jpg",
+      imageUrl: "uploads/1786698625219-tsagaan-awdar.jpg",
     });
     setErrorMsg("");
     setIsModalOpen(true);
@@ -175,7 +175,7 @@ export function AdminDashboard() {
       priceNote: p.priceNote || "",
       description: p.description,
       tags: p.tags,
-      imageUrl: p.images[0]?.url || "/uploads/avdar-ulzii-satin.jpg",
+      imageUrl: p.images[0]?.url || "public/uploads/1786698625219-tsagaan-awdar.jpg",
     });
     setErrorMsg("");
     setIsModalOpen(true);
@@ -473,7 +473,7 @@ export function AdminDashboard() {
                       <div className="flex items-center gap-3.5">
                         <div className="relative w-14 h-14 rounded-lg overflow-hidden border border-brand-border flex-shrink-0 bg-brand-bg">
                           <Image
-                            src={p.images[0]?.url || "/uploads/avdar-ulzii-satin.jpg"}
+                            src={p.images[0]?.url || "public/uploads/1786698625219-tsagaan-awdar.jpg"}
                             alt={p.name}
                             fill
                             className="object-cover"

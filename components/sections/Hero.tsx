@@ -89,40 +89,29 @@ export function Hero() {
 
           {/* Hero Visual Card */}
           <div className="lg:col-span-5 relative">
-            <div className="relative aspect-[4/3] sm:aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl border-4 border-white bg-brand-border/30">
+            {/* "group" нэмснээр дотоод Image-ийг эцэг div-ийн hover-т уяж болно */}
+            <div className="group relative aspect-[4/3] sm:aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl border-4 border-white bg-brand-border/30">
               <Image
-                src="/uploads/avdar-ulzii-satin.jpg"
+                src="/uploads/1786698625219-tsagaan-awdar.jpg"
                 alt="Монгол уламжлалт сийлбэрт авдар"
                 fill
                 priority
                 sizes="(max-width: 1024px) 100vw, 50vw"
-                className="object-cover"
+                className="object-cover transition-transform duration-500 ease-out group-hover:scale-110"
               />
               {/* Overlay Gradient Tag */}
-              <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-brand-dark/85 via-brand-dark/40 to-transparent p-5 text-white">
-                <p className="text-xs text-brand-gold font-medium uppercase tracking-wider">
+           <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-brand-dark/85 via-brand-dark/40 to-transparent p-5 text-white">
+                <p className="text-xs text-amber-200 font-bold uppercase tracking-wider drop-shadow-sm">
                   Хойморын сонголт
                 </p>
                 <p className="font-serif text-lg font-bold">
-                  Угалзан сийлбэрт уламжлалт авдар
+                  Минималист тумбааштай цагаан авдар
                 </p>
               </div>
             </div>
 
             {/* Floating Quality Badge */}
-            <div className="absolute -bottom-4 -left-4 sm:-bottom-6 sm:-left-6 bg-brand-card p-3 sm:p-4 rounded-xl border border-brand-border shadow-warm flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-brand-gold/20 flex items-center justify-center text-brand-gold">
-                <Hammer className="w-5 h-5" />
-              </div>
-              <div>
-                <p className="text-xs font-semibold text-brand-dark">
-                  Чанартай материйл 
-                </p>
-                <p className="text-[11px] text-brand-muted">
-                  Эдэлгээ урт
-                </p>
-              </div>
-            </div>
+         
           </div>
         </div>
       </div>

@@ -216,7 +216,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
               {/* Specs Table */}
               <div className="rounded-xl bg-brand-card border border-brand-border p-4 sm:p-5 mb-6 space-y-3 shadow-warm">
                 <h3 className="font-serif text-sm font-bold text-brand-dark uppercase tracking-wider border-b border-brand-border pb-2">
-                  Техникийн үзүүлэлт
+                  Бүтээгдэхүүний мэдээлэл
                 </h3>
 
                 {/* Dimensions */}
