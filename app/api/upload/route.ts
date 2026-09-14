@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { writeFile, mkdir } from "fs/promises";
-import path from "path";
+import { uploadFile } from "@/lib/upload";
 
-// Mark as dynamic to prevent build-time processing
 export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
 
 export async function POST(req: NextRequest) {
   try {
@@ -17,24 +16,14 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
+    if (!file.type.startsWith("image/")) {
+      return NextResponse.json(
+        { error: "Зөвхөн зураг файл оруулна уу" },
+        { status: 400 }
+      );
+    }
 
-    // Ensure uploads directory exists
-    const uploadsDir = path.join(process.cwd(), "public", "uploads");
-    await mkdir(uploadsDir, { recursive: true });
-
-    // Generate safe unique filename
-    const cleanFileName = file.name
-      .toLowerCase()
-      .replace(/[^a-z0-9.]/g, "-")
-      .replace(/-+/g, "-");
-    const uniqueFileName = `${Date.now()}-${cleanFileName}`;
-    const filePath = path.join(uploadsDir, uniqueFileName);
-
-    await writeFile(filePath, buffer);
-
-    const fileUrl = `/uploads/${uniqueFileName}`;
+    const fileUrl = await uploadFile(file);
     return NextResponse.json({ url: fileUrl });
   } catch (error) {
     console.error("Upload error:", error);

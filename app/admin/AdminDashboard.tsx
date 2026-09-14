@@ -43,6 +43,8 @@ interface Product {
   images: { id?: string; url: string }[];
 }
 
+const DEFAULT_PRODUCT_IMAGE = "/uploads/1786698625219-tsagaan-awdar.jpg";
+
 export function AdminDashboard() {
   const router = useRouter();
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
@@ -75,7 +77,7 @@ export function AdminDashboard() {
     priceNote: "",
     description: "",
     tags: "",
-    imageUrl: "uploads/1786698625219-tsagaan-awdar.jpg",
+    imageUrl: DEFAULT_PRODUCT_IMAGE,
   });
 
   const [uploadingImage, setUploadingImage] = useState(false);
@@ -155,7 +157,7 @@ export function AdminDashboard() {
       priceNote: "",
       description: "",
       tags: "",
-      imageUrl: "uploads/1786698625219-tsagaan-awdar.jpg",
+      imageUrl: DEFAULT_PRODUCT_IMAGE,
     });
     setErrorMsg("");
     setIsModalOpen(true);
@@ -175,7 +177,7 @@ export function AdminDashboard() {
       priceNote: p.priceNote || "",
       description: p.description,
       tags: p.tags,
-      imageUrl: p.images[0]?.url || "public/uploads/1786698625219-tsagaan-awdar.jpg",
+      imageUrl: p.images[0]?.url || DEFAULT_PRODUCT_IMAGE,
     });
     setErrorMsg("");
     setIsModalOpen(true);
@@ -473,7 +475,7 @@ export function AdminDashboard() {
                       <div className="flex items-center gap-3.5">
                         <div className="relative w-14 h-14 rounded-lg overflow-hidden border border-brand-border flex-shrink-0 bg-brand-bg">
                           <Image
-                            src={p.images[0]?.url || "public/uploads/1786698625219-tsagaan-awdar.jpg"}
+                            src={p.images[0]?.url || DEFAULT_PRODUCT_IMAGE}
                             alt={p.name}
                             fill
                             className="object-cover"
