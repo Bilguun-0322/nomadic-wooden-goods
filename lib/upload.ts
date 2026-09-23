@@ -3,7 +3,8 @@ import { mkdir, writeFile } from "fs/promises";
 import path from "path";
 
 export function getUploadStrategy(): "vercel-blob" | "local" {
-  return process.env.VERCEL ? "vercel-blob" : "local";
+  const hasVercelBlobToken = Boolean(process.env.BLOB_READ_WRITE_TOKEN);
+  return process.env.VERCEL && hasVercelBlobToken ? "vercel-blob" : "local";
 }
 
 export function sanitizeFileName(fileName: string): string {
@@ -16,17 +17,8 @@ export function sanitizeFileName(fileName: string): string {
 
   return clean || "image";
 }
-export async function uploadFile(file: File): Promise<string> {
-  const strategy = getUploadStrategy();
 
-  if (strategy === "vercel-blob") {
-    const blob = await put(`uploads/${Date.now()}-${sanitizeFileName(file.name)}`, file, {
-      access: "public",
-    });
-
-    return blob.url;
-  }
-
+async function uploadLocally(file: File): Promise<string> {
   const uploadsDir = path.join(process.cwd(), "public", "uploads");
   await mkdir(uploadsDir, { recursive: true });
 
@@ -35,4 +27,23 @@ export async function uploadFile(file: File): Promise<string> {
 
   await writeFile(filePath, Buffer.from(await file.arrayBuffer()));
   return `/uploads/${safeFileName}`;
+}
+
+export async function uploadFile(file: File): Promise<string> {
+  const strategy = getUploadStrategy();
+
+  if (strategy === "vercel-blob") {
+    try {
+      const blob = await put(`uploads/${Date.now()}-${sanitizeFileName(file.name)}`, file, {
+        access: "public",
+      });
+
+      return blob.url;
+    } catch (error) {
+      console.warn("Vercel Blob upload failed, falling back to local storage:", error);
+      return uploadLocally(file);
+    }
+  }
+
+  return uploadLocally(file);
 }
