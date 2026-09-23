@@ -77,7 +77,7 @@ export function AdminDashboard() {
     priceNote: "",
     description: "",
     tags: "",
-    imageUrl: DEFAULT_PRODUCT_IMAGE,
+    imageUrls: [] as string[],
   });
 
   const [uploadingImage, setUploadingImage] = useState(false);
@@ -157,7 +157,7 @@ export function AdminDashboard() {
       priceNote: "",
       description: "",
       tags: "",
-      imageUrl: DEFAULT_PRODUCT_IMAGE,
+      imageUrls: [] as string[],
     });
     setErrorMsg("");
     setIsModalOpen(true);
@@ -177,37 +177,51 @@ export function AdminDashboard() {
       priceNote: p.priceNote || "",
       description: p.description,
       tags: p.tags,
-      imageUrl: p.images[0]?.url || DEFAULT_PRODUCT_IMAGE,
+      imageUrls: p.images.map((image) => image.url),
     });
     setErrorMsg("");
     setIsModalOpen(true);
   };
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+    const files = Array.from(e.target.files || []);
+    if (!files.length) return;
+
+    const availableSlots = 3 - formData.imageUrls.length;
+    if (files.length > availableSlots) {
+      alert(`Хамгийн ихдээ 3 зураг оруулна уу. Одоо ${availableSlots} зурагны зай байна.`);
+      e.target.value = "";
+      return;
+    }
 
     try {
       setUploadingImage(true);
-      const body = new FormData();
-      body.append("file", file);
+      const uploadedUrls = await Promise.all(files.map(async (file) => {
+        const body = new FormData();
+        body.append("file", file);
+        const res = await fetch("/api/upload", { method: "POST", body });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || "Зураг оруулахад алдаа гарлаа");
+        return data.url as string;
+      }));
 
-      const res = await fetch("/api/upload", {
-        method: "POST",
-        body,
-      });
-
-      const data = await res.json();
-      if (!res.ok) {
-        throw new Error(data.error || "Зураг оруулахад алдаа гарлаа");
-      }
-
-      setFormData((prev) => ({ ...prev, imageUrl: data.url }));
+      setFormData((prev) => ({
+        ...prev,
+        imageUrls: [...prev.imageUrls, ...uploadedUrls].slice(0, 3),
+      }));
+      e.target.value = "";
     } catch (err: any) {
       alert(err.message || "Зураг оруулах амжилтгүй боллоо");
     } finally {
       setUploadingImage(false);
     }
+  };
+
+  const removeImage = (index: number) => {
+    setFormData((prev) => ({
+      ...prev,
+      imageUrls: prev.imageUrls.filter((_, imageIndex) => imageIndex !== index),
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -697,34 +711,42 @@ export function AdminDashboard() {
                 <label className="block text-xs font-semibold text-brand-dark mb-1">
                   Зураг (Компьютерээсээ зураг оруулах)
                 </label>
-                <div className="flex items-center gap-4">
-                  <div className="relative w-20 h-20 rounded-xl overflow-hidden border-2 border-brand-border bg-brand-bg flex-shrink-0">
-                    {formData.imageUrl ? (
-                      <Image
-                        src={formData.imageUrl}
-                        alt="Урьдчилан харах"
-                        fill
-                        className="object-cover"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center text-brand-muted">
+                <div className="space-y-3">
+                  <div className="grid grid-cols-3 gap-3">
+                    {formData.imageUrls.map((imageUrl, index) => (
+                      <div key={`${imageUrl}-${index}`} className="relative aspect-square rounded-xl overflow-hidden border-2 border-brand-border bg-brand-bg">
+                        <Image src={imageUrl} alt={`Урьдчилан харах ${index + 1}`} fill className="object-cover" />
+                        <button
+                          type="button"
+                          onClick={() => removeImage(index)}
+                          className="absolute top-1 right-1 w-6 h-6 rounded-full bg-brand-dark/80 text-white flex items-center justify-center"
+                          aria-label={`Зураг ${index + 1} устгах`}
+                        >
+                          <X className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
+                    ))}
+                    {!formData.imageUrls.length && (
+                      <div className="aspect-square rounded-xl border-2 border-dashed border-brand-border flex items-center justify-center text-brand-muted">
                         <ImageIcon className="w-6 h-6" />
                       </div>
                     )}
                   </div>
-                  <div className="flex-1">
+                  <div>
                     <label className="tap-target px-4 py-2 rounded-lg bg-brand-bg border border-brand-border text-xs font-semibold text-brand-dark hover:border-brand-gold cursor-pointer inline-flex items-center gap-2">
                       <Upload className="w-4 h-4 text-brand-gold" />
-                      <span>{uploadingImage ? "Хуулж байна..." : "Шинэ зураг сонгох"}</span>
+                      <span>{uploadingImage ? "Хуулж байна..." : "Зураг сонгох"}</span>
                       <input
                         type="file"
                         accept="image/*"
+                        multiple
                         onChange={handleImageUpload}
                         className="hidden"
+                        disabled={uploadingImage || formData.imageUrls.length >= 3}
                       />
                     </label>
                     <p className="text-[11px] text-brand-muted mt-1">
-                      Зураг шууд таны компьютерийн `/public/uploads` хавтсанд хадгалагдана.
+                      Хамгийн ихдээ 3 зураг. Detail хуудсанд 4 секунд тутам автоматаар солигдоно.
                     </p>
                   </div>
                 </div>

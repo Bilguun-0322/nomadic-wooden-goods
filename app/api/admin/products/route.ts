@@ -6,6 +6,18 @@ import { slugify } from "@/lib/utils";
 // Mark as dynamic to prevent build-time data collection
 export const dynamic = "force-dynamic";
 
+function getImageUrls(body: { imageUrls?: unknown; imageUrl?: unknown }): string[] {
+  const values = Array.isArray(body.imageUrls)
+    ? body.imageUrls
+    : body.imageUrl
+      ? [body.imageUrl]
+      : [];
+
+  return values
+    .filter((url): url is string => typeof url === "string" && url.trim().length > 0)
+    .slice(0, 3);
+}
+
 function checkAuth(): boolean {
   const authCookie = cookies().get("admin_auth");
   return authCookie?.value === "authenticated";
@@ -48,6 +60,7 @@ export async function POST(req: NextRequest) {
       tags,
       isFeatured,
       priceNote,
+      imageUrls,
       imageUrl,
     } = body;
 
@@ -82,9 +95,9 @@ export async function POST(req: NextRequest) {
         tags: tags || "",
         isFeatured: isFeatured ?? false,
         priceNote: priceNote || null,
-        images: imageUrl
+        images: getImageUrls({ imageUrls, imageUrl }).length
           ? {
-              create: [{ url: imageUrl }],
+              create: getImageUrls({ imageUrls, imageUrl }).map((url) => ({ url })),
             }
           : undefined,
       },
@@ -122,6 +135,7 @@ export async function PUT(req: NextRequest) {
       tags,
       isFeatured,
       priceNote,
+      imageUrls,
       imageUrl,
     } = body;
 
@@ -150,15 +164,14 @@ export async function PUT(req: NextRequest) {
       },
     });
 
-    // If new imageUrl provided, replace or add image
-    if (imageUrl) {
+    const urls = getImageUrls({ imageUrls, imageUrl });
+    if (Array.isArray(imageUrls) || imageUrl) {
       await db.image.deleteMany({ where: { productId: id } });
-      await db.image.create({
-        data: {
-          url: imageUrl,
-          productId: id,
-        },
-      });
+      if (urls.length) {
+        await db.image.createMany({
+          data: urls.map((url) => ({ url, productId: id })),
+        });
+      }
     }
 
     const finalProduct = await db.product.findUnique({

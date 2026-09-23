@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
@@ -19,6 +18,7 @@ import { getCategoryName, BRAND } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
 import { ProductCard } from "@/components/ui/ProductCard";
 import { PatternDivider } from "@/components/ui/PatternDivider";
+import { ProductGallery } from "./ProductGallery";
 
 interface ProductPageProps {
   params: {
@@ -147,39 +147,12 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
         {/* Main Details Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mb-16">
           {/* Gallery / Image Showcase */}
-          <div className="lg:col-span-7 space-y-4">
-            <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-warm border border-brand-border bg-brand-border/20">
-              <Image
-                src={mainImage}
-                alt={product.name}
-                fill
-                priority
-                sizes="(max-width: 1024px) 100vw, 60vw"
-                className="object-cover"
-              />
-              <span className="absolute top-4 left-4 px-3.5 py-1.5 text-xs font-semibold rounded-full bg-brand-dark/85 text-white backdrop-blur-sm">
-                {getCategoryName(product.category)}
-              </span>
-            </div>
-
-            {/* Thumbnail gallery if multiple images */}
-            {product.images.length > 1 && (
-              <div className="grid grid-cols-4 gap-3">
-                {product.images.map((img, index) => (
-                  <div
-                    key={img.id}
-                    className="relative aspect-[4/3] rounded-lg overflow-hidden border-2 border-brand-border hover:border-brand-gold cursor-pointer transition-colors"
-                  >
-                    <Image
-                      src={img.url}
-                      alt={`${product.name} - ${index + 1}`}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                ))}
-              </div>
-            )}
+          <div className="lg:col-span-7">
+            <ProductGallery
+              images={product.images.length ? product.images.map((image) => image.url) : [mainImage]}
+              productName={product.name}
+              categoryName={getCategoryName(product.category)}
+            />
           </div>
 
           {/* Product Specifications & Order Box */}
@@ -291,7 +264,7 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
                   Энэ бүтээгдэхүүнийг захиалах
                 </h4>
                 <p className="text-xs text-[#d0c4b6]">
-                  Messenger эсвэл утсаар холбогдож өөрийн хэмжээгээр тохируулан захиалаарай.
+                  Messenger эсвэл утсаар холбогдож захиалаарай.
                 </p>
               </div>
 

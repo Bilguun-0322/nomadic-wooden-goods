@@ -15,28 +15,7 @@ export const metadata: Metadata = {
 
 
 
-const PROCESS_STEPS = [
-  {
-    num: "01",
-    title: "Материал бэлтгэл & Зүсвэр",
-    desc: "Хэрэглэгчийн сонгосон хэмжээний дагуу модыг нарийн зүсэж цэвэрлэн, бүдүүн болон нарийн зүлгүүрээр гадаргууг тэгшлэн бэлтгэдэг."
-  },
-  {
-    num: "02",
-    title: "Уламжлалт угсралт & Арам зангидах",
-    desc: "Бэлтгэсэн модыг уламжлалт аргаар углуурган хийж, бүтээгдэхүүний ерөнхий арам болон бүтцийг бат бөх зангидна."
-  },
-  {
-    num: "03",
-    title: "2D&3D сийлбэр",
-    desc: "Хэрэглэгчийн сонгосон хээ угалзыг 2D, 3D технологиор нарийвчлан сийлж, гадаргууг дахин нямбай зүлгэж төгс хэлбэрт оруулна."
-  },
-  {
-    num: "04",
-    title: "Тосон&Шороон будаг",
-    desc: "Шороон болон тосон будаг шингээж өнгийг гарган, чанартай лакаар бүрхэж эцсийн байдлаар бүрэн хатааж бэлэн болгоно."
-  }
-];
+
 
 export default function AboutPage() {
   return (
@@ -100,41 +79,7 @@ export default function AboutPage() {
         {/* Wood Types Section */}
         
 
-        {/* Crafting Process Steps */}
-        <div className="mb-16 sm:mb-20">
-          <div className="text-center max-w-2xl mx-auto mb-10">
-            <span className="text-xs sm:text-sm font-semibold uppercase tracking-wider text-brand-gold">
-              Технологи & Дараалал
-            </span>
-            <h2 className="font-serif font-bold text-2xl sm:text-3xl text-brand-dark mt-1 mb-2">
-              Урлалын 4 үе шат
-            </h2>
-            <p className="text-sm text-brand-muted">
-              Мод бэлтгэлээс эхлээд эцсийн бүтээл болох хүртэлх нарийн нямбай ажиллагаа.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {PROCESS_STEPS.map((step, idx) => (
-              <div
-                key={idx}
-                className="p-6 rounded-xl bg-brand-card border border-brand-border relative overflow-hidden flex flex-col justify-between"
-              >
-                <div>
-                  <span className="text-3xl font-serif font-bold text-brand-gold/30 block mb-2">
-                    {step.num}
-                  </span>
-                  <h3 className="font-serif font-bold text-base sm:text-lg text-brand-dark mb-2">
-                    {step.title}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-brand-muted leading-relaxed">
-                    {step.desc}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+       
 
         {/* Bottom CTA Box */}
         <div className="rounded-2xl bg-brand-dark text-white p-8 sm:p-12 text-center max-w-4xl mx-auto shadow-xl">

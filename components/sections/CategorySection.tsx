@@ -6,8 +6,8 @@ import { ArrowRight } from "lucide-react";
 const CATEGORY_CARDS = [
   {
     id: "avdar",
-    title: "Уламжлалт Авдар",
-    subtitle: "2D болон 3D сийлбэртэй авдарнууд",
+    title: "Авдар Гүнгэрваа",
+    subtitle: "2D болон 3D сийлбэртэй авдар гүнгэрваа",
     href: "/products?category=avdar",
     image: "/uploads/avdar-ulzii-satin.jpg",
     itemCount: "Захиалгаар",
@@ -25,7 +25,7 @@ const CATEGORY_CARDS = [
     title: "Модон тавилга",
     subtitle: "Ширээ сандал, модон ор, мориний цондог, модон шүүгээ, тавиур бусад",
     href: "/products?category=gift",
-    image: "/uploads/burr-birch-bowls.jpg",
+    image: "/uploads/IMG_1838.PNG",
     itemCount: "Захиалгаар",
   },
 ];
