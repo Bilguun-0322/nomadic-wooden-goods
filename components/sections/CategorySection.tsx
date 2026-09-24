@@ -9,7 +9,7 @@ const CATEGORY_CARDS = [
     title: "Авдар Гүнгэрваа",
     subtitle: "2D болон 3D сийлбэртэй авдар гүнгэрваа",
     href: "/products?category=avdar",
-    image: "/uploads/avdar-ulzii-satin.jpg",
+    image: "/uploads/awdar11.png",
     itemCount: "Захиалгаар",
   },
   {
@@ -17,7 +17,7 @@ const CATEGORY_CARDS = [
     title: "Авдар сэргээн засварлах үйлчилгээ",
     subtitle: " Бид хуучин,гэмтэлтэй авдрыг чанартай сэргээн засварлаж байна.",
     href: "/products?category=wood_item",
-    image: "/uploads/larch-tea-table.jpg",
+    image: "/uploads/coverawdar.png",
     itemCount: "Захиалгаар",
   },
   {
@@ -25,7 +25,7 @@ const CATEGORY_CARDS = [
     title: "Модон тавилга",
     subtitle: "Ширээ сандал, модон ор, мориний цондог, модон шүүгээ, тавиур бусад",
     href: "/products?category=gift",
-    image: "/uploads/IMG_1838.PNG",
+    image: "/uploads/shireesandal.png",
     itemCount: "Захиалгаар",
   },
 ];

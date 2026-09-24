@@ -43,7 +43,7 @@ export function Footer() {
               </li>
               <li>
                 <Link href="/about" className="hover:text-brand-gold transition-colors block py-1">
-                  Бидний тухай & Урлал
+                  Бидний тухай
                 </Link>
               </li>
               <li>
@@ -73,22 +73,22 @@ export function Footer() {
             <ul className="space-y-2 text-sm text-[#c5b9ad]">
               <li>
                 <Link href="/products?category=avdar" className="hover:text-brand-gold transition-colors block py-1">
-                  Уламжлалт сийлбэрт авдар
+                 Авдар Гүнгэрваа
                 </Link>
               </li>
               <li>
                 <Link href="/products?category=wood_item" className="hover:text-brand-gold transition-colors block py-1">
-                  Модон тавилга & Ширээ сандал
+                 Авдар сэргээн засварлах үйлчилгээ
                 </Link>
               </li>
               <li>
                 <Link href="/products?category=gift" className="hover:text-brand-gold transition-colors block py-1">
-                  Бэлэг дурсгал & Модон шатар
+                    Модон тавилга
                 </Link>
               </li>
               <li>
                 <Link href="/products" className="hover:text-brand-gold transition-colors block py-1">
-                  Тусгай захиалгат урлал
+                  Тусгай захиалга
                 </Link>
               </li>
             </ul>

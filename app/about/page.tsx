@@ -39,7 +39,7 @@ export default function AboutPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center mb-16 sm:mb-20">
           <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-warm border border-brand-border bg-brand-border/20">
             <Image
-              src="uploads/1786683792823-temee-awdar.jpg"
+              src="uploads/awdar11.png"
               alt="Модон эдлэл урлал"
               fill
               className="object-cover"
