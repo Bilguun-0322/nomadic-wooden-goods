@@ -53,7 +53,7 @@ export default function ContactPage() {
             Бидэнтэй холбогдох
           </h1>
           <p className="text-sm sm:text-base text-brand-muted">
-            Захиалга өгөх, хэмжээ тохирох эсвэл модон эдлэлийн талаар зөвлөгөө авах бол доорх сувгуудаар холбогдоорой.
+            Захиалга өгөх, эсвэл модон эдлэлийн талаар зөвлөгөө авах бол доорх сувгуудаар холбогдоорой.
           </p>
         </div>
 
@@ -120,7 +120,7 @@ export default function ContactPage() {
                 </div>
                 <div>
                   <h4 className="font-serif font-bold text-base text-brand-dark">
-                    Үйлдвэрийн цехийн байршил
+                    Үйлдвэрлэлийн байршил
                   </h4>
                   <p className="text-sm text-brand-muted mt-0.5">
                     {BRAND.address}
@@ -167,11 +167,11 @@ export default function ContactPage() {
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-brand-gold flex-shrink-0" />
-                  <span>Хэмжээ, Өнгө, Хээ өлбөргүй тооцоолол</span>
+                  <span>Хэмжээ, Өнгө, Хээ сонголт</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-brand-gold flex-shrink-0" />
-                  <span>Хүргэлт, угсралтын баталгаа</span>
+                  <span>Хүргэлт, чанарын баталгаа</span>
                 </li>
               </ul>
             </div>

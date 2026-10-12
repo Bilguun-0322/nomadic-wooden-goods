@@ -58,7 +58,7 @@ export function Navbar() {
                 {BRAND.name}
               </span>
               <span className="text-[11px] text-brand-muted font-medium tracking-wide">
-                Гар урлал & Модон эдлэл
+                3D Сийлбэр & Модон эдлэл
               </span>
             </div>
           </Link>
