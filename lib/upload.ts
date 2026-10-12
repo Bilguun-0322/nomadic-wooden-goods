@@ -1,10 +1,12 @@
+
 import { put } from "@vercel/blob";
-import { mkdir, writeFile } from "fs/promises";
-import path from "path";
 
 export function getUploadStrategy(): "vercel-blob" | "local" {
-  const hasVercelBlobToken = Boolean(process.env.BLOB_READ_WRITE_TOKEN);
-  return process.env.VERCEL && hasVercelBlobToken ? "vercel-blob" : "local";
+  if (process.env.VERCEL) {
+    return "vercel-blob";
+  }
+
+  return "local";
 }
 
 export function sanitizeFileName(fileName: string): string {
@@ -19,13 +21,28 @@ export function sanitizeFileName(fileName: string): string {
 }
 
 async function uploadLocally(file: File): Promise<string> {
-  const uploadsDir = path.join(process.cwd(), "public", "uploads");
-  await mkdir(uploadsDir, { recursive: true });
+  // Зөвхөн локал хөгжүүлэлтийн орчинд ашиглана.
+  const fs = await import("fs/promises");
+  const path = await import("path");
 
-  const safeFileName = `${Date.now()}-${sanitizeFileName(file.name)}`.slice(0, 180);
+  const uploadsDir = path.join(
+    process.cwd(),
+    "public",
+    "uploads"
+  );
+
+  await fs.mkdir(uploadsDir, { recursive: true });
+
+  const safeFileName =
+    `${Date.now()}-${sanitizeFileName(file.name)}`.slice(0, 180);
+
   const filePath = path.join(uploadsDir, safeFileName);
 
-  await writeFile(filePath, Buffer.from(await file.arrayBuffer()));
+  await fs.writeFile(
+    filePath,
+    Buffer.from(await file.arrayBuffer())
+  );
+
   return `/uploads/${safeFileName}`;
 }
 
@@ -33,16 +50,18 @@ export async function uploadFile(file: File): Promise<string> {
   const strategy = getUploadStrategy();
 
   if (strategy === "vercel-blob") {
-    try {
-      const blob = await put(`uploads/${Date.now()}-${sanitizeFileName(file.name)}`, file, {
+    // Vercel дээр Blob амжилтгүй болбол локал хавтас руу
+    // fallback хийхгүй. Анхны алдааг хадгалж гаргана.
+    const blob = await put(
+      `uploads/${Date.now()}-${sanitizeFileName(file.name)}`,
+      file,
+      {
         access: "public",
-      });
+        addRandomSuffix: true,
+      }
+    );
 
-      return blob.url;
-    } catch (error) {
-      console.warn("Vercel Blob upload failed, falling back to local storage:", error);
-      return uploadLocally(file);
-    }
+    return blob.url;
   }
 
   return uploadLocally(file);
